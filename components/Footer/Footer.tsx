@@ -9,7 +9,7 @@ const Footer = () => {
         <div className={css.wrap}>
           <p>Developer: Vita Inhulska</p>
           <p>
-            Contact us:
+            Contact us:&nbsp;
             <Link href="mailto:vitainhulska@notehub.app">
               vitainhulska@notehub.app
             </Link>

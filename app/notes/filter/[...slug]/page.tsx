@@ -6,10 +6,33 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
+import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  return {
+    title: slug[0] === "All" ? "All Notes" : `${slug[0]} notes`,
+    description: slug[0] === "All" ? "All notes" : `Notes with tag ${slug[0]}`,
+    openGraph: {
+      title: slug[0] === "All" ? "All Notes" : `${slug[0]} notes`,
+      description:
+        slug[0] === "All" ? "All notes" : `Notes with tag ${slug[0]}`,
+      url: `https://08-zustand-eight-henna.vercel.app//notes/${slug.join("/")}`,
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          width: 1200,
+          height: 630,
+          alt: slug[0] === "All" ? "All Notes" : `${slug[0]} notes`,
+        },
+      ],
+    },
+  };
+}
 
 export default async function App({ params }: Props) {
   const queryClient = new QueryClient();
